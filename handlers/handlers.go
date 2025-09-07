@@ -102,6 +102,7 @@ func GetALlPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// TODO: add mutex when accessing the db to write
 func CreatePost(w http.ResponseWriter, r *http.Request) {
 	var post Blog
 	db, err := connectDB()

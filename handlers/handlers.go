@@ -196,7 +196,6 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("response: %s ", res2)
 }
 
-// TODO: make search post by title feature
 func SearchPost(w http.ResponseWriter, r *http.Request) {
 	db, err := connectDB()
 	var JSON_post Blog

@@ -179,23 +179,37 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("response: %s ", res)
 }
 
-//TODO: make an update post feature (update post set title = 'CHANGED UP' , content = 'THIS IS A CHANGED MSG' where title ='Wawaweewa';)
-
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	db, err := connectDB()
 	CheckError(err)
 	var post UpdateBlog
 	var bl Blog
+	var title string
 	err = json.NewDecoder(r.Body).Decode(&post)
 	CheckError(err)
 	err = CheckEmpty(bl, post)
 	CheckError(err)
-	query := "UPDATE post SET title = ?, content = ? WHERE title = ?;"
+	query := "select title from post where title=?;"
 	mutex.Lock()
-	res, err := db.ExecContext(context.Background(), query, post.NewTitle, post.NewContent, post.Title)
+	res, err := db.Query(query, post.Title)
 	mutex.Unlock()
 	CheckError(err)
-	fmt.Printf("response: %s ", res)
+	for res.Next() {
+		err := res.Scan(&title)
+		CheckError(err)
+	}
+	fmt.Printf("\nTHE TEST response: %s \n", title)
+	if title != post.Title {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	query = "UPDATE post SET title = ?, content = ? WHERE title = ?;"
+
+	mutex.Lock()
+	res2, err := db.ExecContext(context.Background(), query, post.NewTitle, post.NewContent, post.Title)
+	mutex.Unlock()
+	CheckError(err)
+	fmt.Printf("response: %s ", res2)
 }
 
 //TODO: make search post by title feature

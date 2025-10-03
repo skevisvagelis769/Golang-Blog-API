@@ -151,23 +151,27 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("response: %s ", res)
 }
 
-func CheckExists(db *sql.DB, title string) error {
+func CheckExists(db *sql.DB, title string) (error, *sql.Rows) {
 	err1 := errors.New("Not found")
 	var temp string
+
 	query := "select title from post where title=?;"
 	mutex.Lock()
-	res, err := db.Query(query, title)
+	err := db.QueryRow(query, title).Scan(&temp)
+	fmt.Println("Result is ", temp)
 	mutex.Unlock()
 	CheckError(err)
-	for res.Next() {
-		err := res.Scan(&temp)
-		CheckError(err)
-	}
+
 	fmt.Printf("\nTHE TEST response: %s \n", title)
+	fmt.Printf("\nTHE TEMP IS %s\n", temp)
 	if temp != title {
-		return err1
+		fmt.Println("IN IF WHERE NO QUERY IS DONE ")
+		return err1, nil
 	} else {
-		return nil
+
+		Result, err := db.Query("select * from post where title=?;", title)
+		CheckError(err)
+		return nil, Result
 	}
 }
 
@@ -180,7 +184,7 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	CheckError(err)
 	err = CheckEmpty(bl, post)
 	CheckError(err)
-	err = CheckExists(db, post.Title)
+	err, _ = CheckExists(db, post.Title)
 	CheckError(err)
 
 	query := "UPDATE post SET title = ?, content = ? WHERE title = ?;"
@@ -192,6 +196,24 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("response: %s ", res2)
 }
 
-//TODO: make search post by title feature
+// TODO: make search post by title feature
+func SearchPost(w http.ResponseWriter, r *http.Request) {
+	db, err := connectDB()
+	var JSON_post Blog
+	CheckError(err)
+	id := string(r.PathValue("id"))
+
+	fmt.Printf("Id is %s", id)
+	err, post := CheckExists(db, id)
+	CheckError(err)
+	for post.Next() {
+		err := post.Scan(&JSON_post.Title, &JSON_post.Content, &JSON_post.Category, &JSON_post.Tags, &JSON_post.Created, &JSON_post.Updated)
+		CheckError(err)
+	}
+	fmt.Println(JSON_post.Title, JSON_post.Content, JSON_post.Category, JSON_post.Tags, JSON_post.Created, JSON_post.Updated)
+	j, err := json.Marshal(JSON_post)
+	w.Write(j)
+	w.WriteHeader(http.StatusOK)
+}
 
 //TODO: make delete post feature

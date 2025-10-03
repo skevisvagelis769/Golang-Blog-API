@@ -1,13 +1,11 @@
 package handlers
 
 import (
-	"bytes"
 	"context"
 	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"reflect"
@@ -94,38 +92,9 @@ func CheckEmpty(post Blog, update UpdateBlog) error {
 
 }
 
-/* func printDb(tb Blog, test []byte) {
-	fmt.Println("===========NORMAL STRING==========")
-	fmt.Println(tb.Title + " | " + tb.Content + " | " + tb.Category + " | " + string(tb.Tags) + " | " + tb.Created + " | " + tb.Updated)
-	fmt.Println("==========IN JSON==========")
-	fmt.Println(string(test))
-} */
-
 func printDb(tb Blog, test []byte) {
 	fmt.Println("===========NORMAL STRING==========")
 	fmt.Println(tb.Title + " | " + tb.Content + " | " + tb.Category + " | " + string(tb.Tags) + " | " + tb.Created + " | " + tb.Updated)
-	//send, err := json.Marshal(tb)
-	/* 	var jsonstr = fmt.Sprintf(``)
-	 */
-	data, err := os.ReadFile("/media/carabi/New Volume/GO/src/github.com/skevisvagelis769/BLOG_API/handlers/test.json")
-	CheckError(err)
-	//send, err := json.Marshal(data)
-	CheckError(err)
-	req, err := http.NewRequest("POST", "http://localhost:4318/v1/logs", bytes.NewBuffer(data))
-	req.Header.Set("Content-Type", "application/json")
-
-	CheckError(err)
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	CheckError(err)
-	defer resp.Body.Close()
-
-	body, _ := io.ReadAll(resp.Body)
-
-	// 3. Print response
-	fmt.Println("==========HTTP RESPONSE==========")
-	fmt.Println("Status:", resp.Status)
-	fmt.Println("Body:", string(body))
 	fmt.Println("==========IN JSON==========")
 	fmt.Println(string(test))
 }
@@ -158,6 +127,9 @@ func GetALlPost(w http.ResponseWriter, r *http.Request) {
 
 		printDb(tb, j)
 	}
+	j, err := json.Marshal(Bl)
+	CheckError(err)
+	w.Write(j)
 }
 
 func CreatePost(w http.ResponseWriter, r *http.Request) {
@@ -179,31 +151,39 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("response: %s ", res)
 }
 
+func CheckExists(db *sql.DB, title string) error {
+	err1 := errors.New("Not found")
+	var temp string
+	query := "select title from post where title=?;"
+	mutex.Lock()
+	res, err := db.Query(query, title)
+	mutex.Unlock()
+	CheckError(err)
+	for res.Next() {
+		err := res.Scan(&temp)
+		CheckError(err)
+	}
+	fmt.Printf("\nTHE TEST response: %s \n", title)
+	if temp != title {
+		return err1
+	} else {
+		return nil
+	}
+}
+
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	db, err := connectDB()
 	CheckError(err)
 	var post UpdateBlog
 	var bl Blog
-	var title string
 	err = json.NewDecoder(r.Body).Decode(&post)
 	CheckError(err)
 	err = CheckEmpty(bl, post)
 	CheckError(err)
-	query := "select title from post where title=?;"
-	mutex.Lock()
-	res, err := db.Query(query, post.Title)
-	mutex.Unlock()
+	err = CheckExists(db, post.Title)
 	CheckError(err)
-	for res.Next() {
-		err := res.Scan(&title)
-		CheckError(err)
-	}
-	fmt.Printf("\nTHE TEST response: %s \n", title)
-	if title != post.Title {
-		w.WriteHeader(http.StatusNotFound)
-		return
-	}
-	query = "UPDATE post SET title = ?, content = ? WHERE title = ?;"
+
+	query := "UPDATE post SET title = ?, content = ? WHERE title = ?;"
 
 	mutex.Lock()
 	res2, err := db.ExecContext(context.Background(), query, post.NewTitle, post.NewContent, post.Title)

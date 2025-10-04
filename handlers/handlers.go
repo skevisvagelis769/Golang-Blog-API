@@ -211,8 +211,19 @@ func SearchPost(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(JSON_post.Title, JSON_post.Content, JSON_post.Category, JSON_post.Tags, JSON_post.Created, JSON_post.Updated)
 	j, err := json.Marshal(JSON_post)
+	CheckError(err)
 	w.Write(j)
 	w.WriteHeader(http.StatusOK)
 }
 
-//TODO: make delete post feature
+// TODO: make delete post feature DELETE FROM table_name WHERE condition;
+func DeletePost(w http.ResponseWriter, r *http.Request) {
+	db, err := connectDB()
+	CheckError(err)
+	id := r.PathValue("id")
+	err, _ = CheckExists(db, id)
+	CheckError(err)
+	_, err = db.Query("DELETE FROM post WHERE `title`=?", id)
+	CheckError(err)
+	w.WriteHeader(http.StatusGone)
+}

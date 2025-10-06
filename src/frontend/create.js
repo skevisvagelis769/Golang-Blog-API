@@ -3,7 +3,7 @@ content= document.getElementById("content")
 category=document.getElementById("category")
 tags=document.getElementById("tags")
 submit=document.getElementById("submit")
-
+div = document.getElementById("box")
 submit.addEventListener('click',e =>{
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
@@ -19,5 +19,15 @@ submit.addEventListener('click',e =>{
     }).then(res => res.json())
     .then(response =>{
         console.log(response)
+        var output = document.createElement("p")
+        output.innerHTML = 'Posted!'
+        div.appendChild(output)
+        var ref = document.createElement("href")
+        ref.innerHTML = "<a href='http://195.251.68.21:8080/'>Return to main menu</a>"
+    }).catch(error =>{
+        console.log(response)
+        var output = document.createElement("p")
+        output.innerHTML = `${error}`
+        div.appendChild(output)
     })
 })

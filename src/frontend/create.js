@@ -4,7 +4,17 @@ category=document.getElementById("category")
 tags=document.getElementById("tags")
 submit=document.getElementById("submit")
 div = document.getElementById("box")
+count = 0 
 submit.addEventListener('click',e =>{
+    count ++ 
+    if (count > 1) {
+    output = document.getElementById("out")
+    output.innerHTML = ""
+    div.appendChild(output)
+    ref = document.getElementById("ref")
+    ref.innerHTML = ""
+    div.appendChild(ref)
+    }
    /*  output = document.getElementById("out")
     output.innerHTML = ""
     div.appendChild(output)

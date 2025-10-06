@@ -32,4 +32,4 @@ jobs:
           docker stop blog || true
           docker rm blog || true
           echo "starting new container"
-          docker run -d -p 8080:8080 --name blog myapp:latest
+          docker run -d -p 8080:8080 --name blog myapp:latest -network connect blog_net2 blog

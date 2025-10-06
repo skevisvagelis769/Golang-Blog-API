@@ -149,6 +149,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	mutex.Unlock()
 	CheckError(err)
 	fmt.Printf("response: %s ", res)
+	fmt.Println("\n===========TITLE IS ========= ", post.Title)
 }
 
 func CheckExists(db *sql.DB, title string) (error, *sql.Rows) {

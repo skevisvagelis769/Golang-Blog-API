@@ -25,6 +25,9 @@ submit.addEventListener('click',e =>{
         ref.innerHTML = "<a href='http://195.251.68.21:8080/'>Return to main menu</a>"
         div.appendChild(output)
         div.appendChild(ref)
+        output.innerHTML = ''
+        div.appendChild(output)
+
        
     }).catch(error =>{
         console.log(response)

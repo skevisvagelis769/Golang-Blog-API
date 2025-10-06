@@ -5,6 +5,14 @@ tags=document.getElementById("tags")
 submit=document.getElementById("submit")
 div = document.getElementById("box")
 submit.addEventListener('click',e =>{
+    output = document.getElementById("out")
+    output.innerHTML = ''
+    div.appendChild(output)
+    ref = document.getElementById("ref")
+    ref.innerHTML = ''
+    div.appendChild(ref)
+
+
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
     fetch('http://195.251.68.21:8080/blog',{
@@ -25,16 +33,17 @@ submit.addEventListener('click',e =>{
         ref.innerHTML = "<a href='http://195.251.68.21:8080/'>Return to main menu</a>"
         div.appendChild(output)
         div.appendChild(ref)
-        output.innerHTML = ''
-        div.appendChild(output)
+        
 
        
     }).catch(error =>{
         console.log(response)
         var output = document.createElement("p")
+        output.id="out"
         output.innerHTML = `${error}`
          var ref = document.createElement("href")
         ref.innerHTML = "<a href='http://195.251.68.21:8080/'>Return to main menu</a>"
+        ref.id="ref"
         div.appendChild(output)
         div.appendChild(ref)
     })

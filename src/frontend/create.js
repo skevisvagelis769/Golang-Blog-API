@@ -16,7 +16,7 @@ submit.addEventListener('click',e =>{
             "category":`${category.value}`,
             "tags":`${tags.value}`
         })
-    }).then(res => res.json())
+    })//.then(res => res.json())
     .then(response =>{
         console.log(response)
         var output = document.createElement("p")

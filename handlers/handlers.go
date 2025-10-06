@@ -217,7 +217,6 @@ func SearchPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// TODO: make delete post feature DELETE FROM table_name WHERE condition;
 func DeletePost(w http.ResponseWriter, r *http.Request) {
 	db, err := connectDB()
 	CheckError(err)

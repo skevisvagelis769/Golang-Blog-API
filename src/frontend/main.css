@@ -7,3 +7,41 @@
       background-color: #f0f8ff;
       font-size: 18px;
 }
+.create_box{
+   display: list-item;
+   list-style: none;
+   margin:0 auto;
+   height: 500px;
+   width: 250px;
+}
+
+.title{
+  
+   width: 250px;
+   height: 20px;
+         padding: 10px;         
+      border: 2px solid steelblue;
+      border-radius: 8px;
+
+}
+
+.content{
+   width: 250px;
+   height: 500px;
+         padding: 10px;         
+      border: 2px solid steelblue;
+      border-radius: 8px;
+}
+.tags{
+   width: 250px;
+   height: 10px;
+         padding: 10px;         
+      border: 2px solid steelblue;
+      border-radius: 8px;
+}
+
+.submit{
+   text-align: center;
+    width: 275px;
+   height: 30px;
+}

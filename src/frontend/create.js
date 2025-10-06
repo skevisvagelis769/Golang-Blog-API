@@ -5,12 +5,12 @@ tags=document.getElementById("tags")
 submit=document.getElementById("submit")
 div = document.getElementById("box")
 submit.addEventListener('click',e =>{
-    output = document.getElementById("out")
+   /*  output = document.getElementById("out")
     output.innerHTML = ""
     div.appendChild(output)
     ref = document.getElementById("ref")
     ref.innerHTML = ""
-    div.appendChild(ref)
+    div.appendChild(ref) */
 
 
     console.log(title.value,content.value,category.value,tags.value)

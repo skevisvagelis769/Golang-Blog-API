@@ -54,7 +54,7 @@ func CheckEmpty(post Blog, update UpdateBlog) error {
 	err := errors.New("empty set")
 
 	if !reflect.ValueOf(post).IsZero() {
-		switch "" {
+		switch " " {
 		case post.Title:
 			fmt.Println("Title cannot be empty")
 			return err

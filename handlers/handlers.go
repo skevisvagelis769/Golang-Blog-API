@@ -31,7 +31,7 @@ type UpdateBlog struct {
 var mutex sync.RWMutex
 
 func connectDB() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:8716@tcp(localhost:3306)/blog")
+	db, err := sql.Open("mysql", "root:example@tcp(172.35.0.3:3306)/blog")
 	CheckError(err)
 
 	err = db.Ping()

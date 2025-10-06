@@ -14,7 +14,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", serveFiles)
-	mux.HandleFunc("GET /blog", handlers.GetALlPost)
+	mux.HandleFunc("GET /", handlers.GetALlPost)
 	mux.HandleFunc("POST /blog", handlers.CreatePost)
 	mux.HandleFunc("POST /blog/update", handlers.UpdatePost)
 	mux.HandleFunc("GET /blog/search/{id}", handlers.SearchPost)

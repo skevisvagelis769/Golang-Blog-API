@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secretes.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
       - name: Deploy code 
-          run: scp -i ~/.ssh/id_rsa -r ./* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/go_git_test
+        run: scp -i ~/.ssh/id_rsa -r ./* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/go_git_test
       - name: Build Docker Image 
         run: | 
           cd /home/ubuntu/go_test/BLOG_API

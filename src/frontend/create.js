@@ -7,7 +7,7 @@ submit=document.getElementById("submit")
 submit.addEventListener('click',e =>{
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
-    fetch('http://localhost:8080/blog',{
+    fetch('http://195.251.68.21:8080/blog',{
         method: "POST",
         headers: {"Content-type":"application/json"},
         body: JSON.stringify({

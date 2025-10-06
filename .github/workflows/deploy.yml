@@ -22,7 +22,7 @@ jobs:
       - name: Build Docker Image 
         run: | 
           export FRONTEND_PATH="${{secrets.FRONTEND_PATH}}"
-          cd /home/ubuntu/go_test/BLOG_API
+          cd /home/${{}secrets.SERVER_USER}/go_test/BLOG_API
           docker build -t myapp:latest .
           echo "building image"
           

@@ -5,7 +5,8 @@ on:
       - main
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted,mgr-sandbox]
+    runs-on: 
+      self-hosted
       
     steps:
       - name: Checkout code 

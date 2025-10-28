@@ -20,7 +20,7 @@ submit.addEventListener('click',e =>{
 
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
-    fetch('http://195.251.68.21:8080/blog',{
+    fetch('http://195.251.68.21/goblog/blog',{
         method: "POST",
         headers: {"Content-type":"application/json"},
         body: JSON.stringify({
@@ -35,7 +35,7 @@ submit.addEventListener('click',e =>{
         var output = document.createElement("p")
         output.innerHTML = 'Posted!'
          var ref = document.createElement("href")
-        ref.innerHTML = "<a href='http://195.251.68.21:8080/'>Return to main menu</a>"
+        ref.innerHTML = "<a href='http://195.251.68.21/goblog/'>Return to main menu</a>"
         div.appendChild(output)
         div.appendChild(ref)
         

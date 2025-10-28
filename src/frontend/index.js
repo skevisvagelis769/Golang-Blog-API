@@ -1,6 +1,6 @@
 const div = document.getElementById("paragraphs")
 
-fetch(`http://195.251.68.21/goblog/blog`,{
+fetch(`/blog`,{
     method:"GET",
     headers:{
         "Content-type":"application/json"

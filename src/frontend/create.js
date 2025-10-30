@@ -20,7 +20,7 @@ submit.addEventListener('click',e =>{
 
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
-    fetch('/blog',{
+    fetch('/goblog/blog',{
         method: "POST",
         headers: {"Content-type":"application/json"},
         body: JSON.stringify({

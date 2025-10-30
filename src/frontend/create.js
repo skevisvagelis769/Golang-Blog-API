@@ -20,7 +20,7 @@ submit.addEventListener('click',e =>{
 
     console.log(title.value,content.value,category.value,tags.value)
     console.log("clicked")
-    fetch('http://195.251.68.21:8080/blog',{
+    fetch('/blog',{
         method: "POST",
         headers: {"Content-type":"application/json"},
         body: JSON.stringify({

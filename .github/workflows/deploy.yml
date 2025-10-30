@@ -35,3 +35,4 @@ jobs:
           docker rm blog || true
           echo "starting new container"
           docker run -d -p 8080:8080 --name blog  --network  blog_net2 myapp:latest
+

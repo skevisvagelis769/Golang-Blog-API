@@ -1,6 +1,6 @@
 const div = document.getElementById("paragraphs")
 
-fetch(`/blog`,{
+fetch(`/goblog/blog`,{
     method:"GET",
     headers:{
         "Content-type":"application/json"

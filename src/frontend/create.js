@@ -35,7 +35,7 @@ submit.addEventListener('click',e =>{
         var output = document.createElement("p")
         output.innerHTML = 'Posted!'
          var ref = document.createElement("href")
-        ref.innerHTML = "<a href='http://195.251.68.21/goblog/'>Return to main menu</a>"
+        ref.innerHTML = "<a href='/goblog/'>Return to main menu</a>"
         div.appendChild(output)
         div.appendChild(ref)
         
